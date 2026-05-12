@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth scroll-pt-24">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AURA | Трансформация тела</title>
+        
+        <script src="https://cdn.tailwindcss.com"></script>
+        
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            premium: '#E6D5B8', // Благородный песочно-золотой
+                            dark: '#0a0a0a',    // Глубокий темный
+                            card: '#121212'     // Цвет карточек
+                        },
+                        fontFamily: {
+                            heading: ['Montserrat', 'sans-serif'], // Возвращаем строгий и объемный шрифт
+                            base: ['Inter', 'sans-serif']          // Чистый шрифт для текста
+                        }
+                    }
+                }
+            }
+        </script>
+    
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Montserrat:wght@500;700;900&display=swap" rel="stylesheet">
+    
+        <style>
+            body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #f4f4f5; }
+            h1, h2, h3, .font-heading { font-family: 'Montserrat', sans-serif; }
+            
+            /* Мягкое свечение для премиум элементов */
+            .premium-glow:hover { box-shadow: 0 0 30px rgba(230, 213, 184, 0.15); }
+            /* Анимация дрожания для ошибок в форме */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .error-shake { animation: shake 0.3s ease-in-out; border-color: #ef4444 !important; }
+        </style>
+    </head>
+<body class="selection:bg-premium selection:text-black antialiased overflow-x-hidden">
+
+    <nav class="fixed top-0 w-full z-50 bg-[#0a0a0a]/80 backdrop-blur-lg border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="text-2xl font-heading font-black tracking-widest text-white uppercase">
+                AURA<span class="text-premium">.</span>
+            </div>
+            <div class="hidden md:flex space-x-10 font-medium text-sm text-zinc-400 uppercase tracking-widest">
+                <a href="#about" class="hover:text-premium transition duration-300">О программе</a>
+                <a href="#bmi" class="hover:text-premium transition duration-300">Калькулятор</a>
+                <a href="#pricing" class="hover:text-premium transition duration-300">Тарифы</a>
+            </div>
+            <a href="#pricing" class="hidden md:block bg-premium text-black font-heading font-black uppercase tracking-wider px-8 py-3 rounded-full hover:bg-white transition duration-500 shadow-lg">
+                Начать путь
+            </a>
+        </div>
+    </nav>
+
+    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=1920" class="w-full h-full object-cover opacity-40 object-center" alt="Premium Fitness">
+            <div class="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent"></div>
+        </div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6 w-full grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8 pt-12"> <div class="inline-block border border-premium/30 text-premium px-5 py-2 rounded-full font-base text-xs uppercase tracking-widest bg-premium/5 backdrop-blur-md">
+                    Онлайн-программа • 8 недель
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-heading font-black leading-[1.1] tracking-tight text-white uppercase">
+                    Построй <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-premium to-white">лучшую версию</span><br>
+                    себя
+                </h1>
+                
+                <p class="text-zinc-400 text-lg max-w-md font-light leading-relaxed">
+                    Сбалансированная программа тренировок и питания. Достигайте результатов в комфортном темпе, без выгорания и травм.
+                </p>
+
+                <div class="flex gap-4 pt-4">
+                    <a href="#pricing" class="bg-premium text-black font-base font-bold uppercase tracking-widest text-sm px-10 py-5 rounded-full premium-glow hover:bg-white hover:scale-105 transition duration-500 text-center inline-block">
+                        Выбрать тариф
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex justify-end items-center">
+                <div class="bg-card/80 border border-white/5 rounded-3xl p-8 backdrop-blur-md w-full max-w-sm shadow-2xl relative overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-premium/10 rounded-full blur-3xl"></div>
+                    <div class="text-xs text-premium font-base font-bold uppercase tracking-widest mb-6 relative z-10">До старта потока:</div>
+                    
+                    <div class="grid grid-cols-2 gap-4 text-center font-heading relative z-10">
+                        <div class="bg-black/50 rounded-2xl py-6 border border-white/5">
+                            <div id="days" class="text-4xl font-bold text-white">00</div>
+                            <div class="text-[10px] text-zinc-500 uppercase tracking-widest mt-2 font-base">Дней</div>
+                        </div>
+                        <div class="bg-black/50 rounded-2xl py-6 border border-white/5">
+                            <div id="hours" class="text-4xl font-bold text-white">00</div>
+                            <div class="text-[10px] text-zinc-500 uppercase tracking-widest mt-2 font-base">Часов</div>
+                        </div>
+                        <div class="bg-black/50 rounded-2xl py-6 border border-white/5">
+                            <div id="minutes" class="text-4xl font-bold text-white">00</div>
+                            <div class="text-[10px] text-zinc-500 uppercase tracking-widest mt-2 font-base">Минут</div>
+                        </div>
+                        <div class="bg-black/50 rounded-2xl py-6 border border-white/5">
+                            <div id="seconds" class="text-4xl font-bold text-premium">00</div>
+                            <div class="text-[10px] text-zinc-500 uppercase tracking-widest mt-2 font-base">Секунд</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-32 px-6 bg-[#0a0a0a] relative border-t border-white/5">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-premium/20 to-transparent"></div>
+        
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-3xl md:text-5xl font-heading font-black text-white uppercase tracking-wide mb-6">Тело, в котором <br><span class="text-premium">хочется жить</span></h2>
+                <p class="text-zinc-400 max-w-2xl mx-auto text-lg font-light">Никаких изнурительных марафонов и жестких ограничений. Только научный подход, любовь к себе и стабильный результат.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-[#121212] border border-white/5 p-10 rounded-3xl hover:border-premium/30 transition duration-500 group">
+                    <div class="text-4xl mb-6 group-hover:scale-110 transition duration-500 inline-block">⏱️</div>
+                    <h3 class="text-xl font-heading font-bold text-white mb-4 uppercase tracking-wider">60 минут в день</h3>
+                    <p class="text-zinc-400 font-light leading-relaxed">Тренировки адаптированы под высокий ритм жизни. Вам понадобится только коврик и час времени дома или в зале.</p>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-10 rounded-3xl hover:border-premium/30 transition duration-500 group">
+                    <div class="text-4xl mb-6 group-hover:scale-110 transition duration-500 inline-block">🥑</div>
+                    <h3 class="text-xl font-heading font-bold text-white mb-4 uppercase tracking-wider">Без жестких диет</h3>
+                    <p class="text-zinc-400 font-light leading-relaxed">Учимся питаться вкусно и сбалансированно. Вы получите конструктор меню, который легко подстроить под себя и семью.</p>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-10 rounded-3xl hover:border-premium/30 transition duration-500 group">
+                    <div class="text-4xl mb-6 group-hover:scale-110 transition duration-500 inline-block">🤝</div>
+                    <h3 class="text-xl font-heading font-bold text-white mb-4 uppercase tracking-wider">Поддержка 24/7</h3>
+                    <p class="text-zinc-400 font-light leading-relaxed">Закрытое комьюнити участников и личный чат с куратором. Мы не дадим вам потерять мотивацию на полпути.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="modules" class="py-32 px-6 bg-[#0d0d0d] relative border-t border-white/5">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-premium text-sm font-heading font-bold uppercase tracking-widest block mb-4">Шаг за шагом</span>
+                <h2 class="text-3xl md:text-5xl font-heading font-black text-white uppercase tracking-wide">Программа курса</h2>
+            </div>
+
+            <div class="space-y-4">
+                <div class="bg-[#121212] border border-white/5 rounded-2xl overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="w-full px-8 py-6 flex justify-between items-center focus:outline-none group">
+                        <div class="flex items-center gap-6">
+                            <span class="text-premium font-heading font-black text-2xl opacity-50 group-hover:opacity-100 transition">01</span>
+                            <span class="text-lg font-heading font-bold text-white uppercase tracking-wider text-left">Фундамент и биомеханика</span>
+                        </div>
+                        <svg class="w-6 h-6 text-zinc-500 transform transition-transform duration-300 arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="px-8 pb-6 hidden content text-zinc-400 font-light border-t border-white/5 pt-6 mt-2 leading-relaxed">
+                        <ul class="space-y-3 list-disc list-inside marker:text-premium">
+                            <li>Оценка исходных данных и постановка целей.</li>
+                            <li>Разбор базовых упражнений: приседания, выпады, тяги.</li>
+                            <li>Включение глубоких мышц кора и работа с дыханием.</li>
+                            <li>Основы составления продуктовой корзины.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-[#121212] border border-white/5 rounded-2xl overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="w-full px-8 py-6 flex justify-between items-center focus:outline-none group">
+                        <div class="flex items-center gap-6">
+                            <span class="text-premium font-heading font-black text-2xl opacity-50 group-hover:opacity-100 transition">02</span>
+                            <span class="text-lg font-heading font-bold text-white uppercase tracking-wider text-left">Пробуждение метаболизма</span>
+                        </div>
+                        <svg class="w-6 h-6 text-zinc-500 transform transition-transform duration-300 arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="px-8 pb-6 hidden content text-zinc-400 font-light border-t border-white/5 pt-6 mt-2 leading-relaxed">
+                        <ul class="space-y-3 list-disc list-inside marker:text-premium">
+                            <li>Интервальные тренировки низкой ударности (LIIT).</li>
+                            <li>Работа с рельефом рук и спины.</li>
+                            <li>Как читать этикетки в магазине и избегать скрытого сахара.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-[#121212] border border-white/5 rounded-2xl overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="w-full px-8 py-6 flex justify-between items-center focus:outline-none group">
+                        <div class="flex items-center gap-6">
+                            <span class="text-premium font-heading font-black text-2xl opacity-50 group-hover:opacity-100 transition">03</span>
+                            <span class="text-lg font-heading font-bold text-white uppercase tracking-wider text-left">Сила и рельеф</span>
+                        </div>
+                        <svg class="w-6 h-6 text-zinc-500 transform transition-transform duration-300 arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="px-8 pb-6 hidden content text-zinc-400 font-light border-t border-white/5 pt-6 mt-2 leading-relaxed">
+                        <ul class="space-y-3 list-disc list-inside marker:text-premium">
+                            <li>Подключение дополнительного инвентаря (гантели, фитнес-резинки).</li>
+                            <li>Акцент на ягодичные мышцы и бедра.</li>
+                            <li>Психология переедания: как не срываться в выходные.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-[#121212] border border-white/5 rounded-2xl overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="w-full px-8 py-6 flex justify-between items-center focus:outline-none group">
+                        <div class="flex items-center gap-6">
+                            <span class="text-premium font-heading font-black text-2xl opacity-50 group-hover:opacity-100 transition">04</span>
+                            <span class="text-lg font-heading font-bold text-white uppercase tracking-wider text-left">Закрепление результата</span>
+                        </div>
+                        <svg class="w-6 h-6 text-zinc-500 transform transition-transform duration-300 arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="px-8 pb-6 hidden content text-zinc-400 font-light border-t border-white/5 pt-6 mt-2 leading-relaxed">
+                        <ul class="space-y-3 list-disc list-inside marker:text-premium">
+                            <li>Круговые тренировки на все тело (Full Body).</li>
+                            <li>Растяжка и восстановление мышечных фасций (МФР).</li>
+                            <li>Стратегия поддержания формы после окончания курса.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="bmi" class="py-32 px-6 bg-[#0a0a0a] relative border-t border-white/5">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <span class="text-premium text-sm font-heading font-bold uppercase tracking-widest block mb-4">Аналитика</span>
+                <h2 class="text-3xl md:text-5xl font-heading font-black text-white uppercase mb-6">Рассчитай свой <br>потенциал</h2>
+                <p class="text-zinc-400 font-light leading-relaxed mb-8">Введите свои параметры, чтобы узнать текущий индекс массы тела и получить базовую рекомендацию по тренировкам.</p>
+                
+                <div class="space-y-6 bg-[#121212] p-8 rounded-3xl border border-white/5 shadow-2xl">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-[10px] text-zinc-500 uppercase font-bold tracking-widest block mb-2">Рост (см)</label>
+                            <input type="number" id="height" class="w-full bg-black border border-white/10 rounded-xl p-4 text-white focus:border-premium transition" placeholder="175">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-zinc-500 uppercase font-bold tracking-widest block mb-2">Вес (кг)</label>
+                            <input type="number" id="weight" class="w-full bg-black border border-white/10 rounded-xl p-4 text-white focus:border-premium transition" placeholder="70">
+                        </div>
+                    </div>
+                    <button onclick="calculateBMI()" class="w-full py-4 bg-premium text-black font-heading font-bold uppercase text-xs rounded-xl hover:bg-white transition duration-500">Рассчитать ИМТ</button>
+                </div>
+            </div>
+
+            <div id="bmi-result-box" class="bg-[#121212]/50 border border-white/5 p-10 rounded-3xl text-center opacity-40 transition-all duration-700">
+                <div id="bmi-value" class="text-7xl font-heading font-black text-white mb-4">00.0</div>
+                <div id="bmi-status" class="text-premium font-heading font-bold uppercase tracking-widest text-sm mb-6">Введите данные</div>
+                <p id="bmi-advice" class="text-zinc-500 font-light text-sm italic">Результат появится после ввода параметров.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="pt-12 pb-32 px-6 bg-[#0a0a0a] relative border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="text-premium text-sm font-heading font-bold uppercase tracking-widest block mb-4">Выбери свой путь</span>
+                <h2 class="text-3xl md:text-5xl font-heading font-black text-white uppercase tracking-wide">Тарифы участия</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 items-center max-w-6xl mx-auto">
+                <div class="bg-[#121212] border border-white/5 rounded-3xl p-8 hover:border-premium/30 transition duration-500">
+                    <h3 class="text-2xl font-heading font-bold text-white mb-2 uppercase">Базовый</h3>
+                    <p class="text-zinc-500 font-light mb-8">Для самостоятельных</p>
+                    <div class="text-4xl font-heading font-black text-white mb-8">4 900 ₽</div>
+                    <ul class="space-y-4 text-zinc-400 font-light mb-10">
+                        <li class="flex items-center gap-3"><span class="text-premium">✓</span> 8 недель тренировок</li>
+                        <li class="flex items-center gap-3"><span class="text-premium">✓</span> Конструктор питания</li>
+                        <li class="flex items-center gap-3"><span class="text-premium">✓</span> Доступ к материалам на 3 месяца</li>
+                        <li class="flex items-center gap-3 opacity-30"><span class="text-zinc-600">✗</span> Общий чат участников</li>
+                        <li class="flex items-center gap-3 opacity-30"><span class="text-zinc-600">✗</span> Проверка техники</li>
+                    </ul>
+                    <button onclick="openModal('Базовый')" class="w-full py-4 border border-white/10 text-white font-heading font-bold uppercase tracking-widest text-xs rounded-full hover:bg-white/5 transition duration-300">Выбрать</button>
+                </div>
+
+                <div class="bg-[#1a1a1a] border border-premium rounded-3xl p-10 transform md:-translate-y-4 shadow-2xl shadow-premium/5 relative">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-premium text-black font-heading font-bold text-[10px] uppercase tracking-widest px-4 py-1 rounded-full">Хит продаж</div>
+                    <h3 class="text-2xl font-heading font-bold text-white mb-2 uppercase">С поддержкой</h3>
+                    <p class="text-zinc-400 font-light mb-8">Идеальный баланс</p>
+                    <div class="text-5xl font-heading font-black text-premium mb-8">8 900 ₽</div>
+                    <ul class="space-y-4 text-zinc-300 font-light mb-10">
+                        <li class="flex items-center gap-3"><span class="text-premium">✓</span> 8 недель тренировок</li>
+                        <li class="flex items-center gap-3"><span class="text-premium">✓</span> Конструктор питания</li>
+                        <li class="flex items-center gap-3"><span class="text-premium">✓</span> Доступ к материалам на 6 месяцев</li>
+                        <li class="flex items-center gap-3"><span class="text-premium">✓</span> Общий чат участников</li>
+                        <li class="flex items-center gap-3"><span class="text-premium">✓</span> Проверка техники куратором</li>
+                    </ul>
+                    <button onclick="openModal('С поддержкой')" class="w-full py-5 bg-premium text-black font-heading font-bold uppercase tracking-widest text-sm rounded-full premium-glow hover:bg-white hover:scale-105 transition duration-500">Занять место</button>
+                </div>
+
+                <div class="bg-[#121212] border border-white/5 rounded-3xl p-8 hover:border-premium/30 transition duration-500">
+                    <h3 class="text-2xl font-heading font-bold text-white mb-2 uppercase">VIP</h3>
+                    <p class="text-zinc-500 font-light mb-8">Личное ведение</p>
+                    <div class="text-4xl font-heading font-black text-white mb-8">24 900 ₽</div>
+                    <ul class="space-y-4 text-zinc-400 font-light mb-10">
+                        <li class="flex items-center gap-3"><span class="text-premium">✓</span> Всё из тарифа "С поддержкой"</li>
+                        <li class="flex items-center gap-3"><span class="text-premium">✓</span> Доступ навсегда</li>
+                        <li class="flex items-center gap-3"><span class="text-premium">✓</span> Индивидуальное меню</li>
+                        <li class="flex items-center gap-3"><span class="text-premium">✓</span> Личный чат с автором курса</li>
+                        <li class="flex items-center gap-3"><span class="text-premium">✓</span> Созвон 1 на 1 каждую неделю</li>
+                    </ul>
+                    <button onclick="openModal('VIP')" class="w-full py-4 border border-white/10 text-white font-heading font-bold uppercase tracking-widest text-xs rounded-full hover:bg-white/5 transition duration-300">Выбрать</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="author" class="py-20 px-6 bg-[#0a0a0a] relative border-t border-white/5">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
+            <div class="w-full md:w-1/2" data-aos="fade-right">
+                <div class="aspect-[4/5] bg-[#121212] rounded-3xl overflow-hidden border border-white/10 relative shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1583465551460-70807cbcd1fa?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700" alt="Тренер">
+                    <div class="absolute bottom-6 left-6 bg-black/60 backdrop-blur-md px-6 py-3 rounded-xl border border-white/10">
+                        <span class="text-premium font-heading font-bold uppercase tracking-widest text-sm">Александр</span>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 space-y-6" data-aos="fade-left">
+                <span class="text-premium text-sm font-heading font-bold uppercase tracking-widest block mb-2">Ваш наставник</span>
+                <h2 class="text-3xl md:text-5xl font-heading font-black text-white uppercase tracking-wide">Главный по телу</h2>
+                <p class="text-zinc-400 font-light leading-relaxed text-lg">Я прошел путь от травмированного новичка до сертифицированного тренера. Моя миссия — показать, что фитнес может быть в кайф, без срывов и жестких диет.</p>
+                <ul class="space-y-4 pt-4 text-zinc-300 font-light">
+                    <li class="flex items-center gap-4"><span class="text-premium text-xl">✓</span> Более 7 лет личной практики</li>
+                    <li class="flex items-center gap-4"><span class="text-premium text-xl">✓</span> 1500+ довольных участников курсов</li>
+                    <li class="flex items-center gap-4"><span class="text-premium text-xl">✓</span> Международный сертификат ISSA</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="py-32 px-6 bg-[#0d0d0d] relative border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-premium text-sm font-heading font-bold uppercase tracking-widest block mb-4">Результаты</span>
+                <h2 class="text-3xl md:text-5xl font-heading font-black text-white uppercase tracking-wide">Что говорят участники</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-[#121212] border border-white/5 rounded-3xl p-8 shadow-xl" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex text-premium mb-6 text-xl">★★★★★</div>
+                    <p class="text-zinc-400 font-light italic mb-8 leading-relaxed">«Минус 6 кг за два месяца без голодовок. Наконец-то появился рельеф на животе, о котором я мечтала годами. Очень понятные видеоуроки!»</p>
+                    <div class="font-heading font-bold text-white uppercase tracking-wider text-sm">— Елена, 28 лет</div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 rounded-3xl p-8 shadow-xl" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex text-premium mb-6 text-xl">★★★★★</div>
+                    <p class="text-zinc-400 font-light italic mb-8 leading-relaxed">«Тренировки топ. Спина перестала болеть после постоянной сидячей работы в офисе. Рекомендую брать тариф с поддержкой куратора.»</p>
+                    <div class="font-heading font-bold text-white uppercase tracking-wider text-sm">— Максим, 34 года</div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 rounded-3xl p-8 shadow-xl" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex text-premium mb-6 text-xl">★★★★★</div>
+                    <p class="text-zinc-400 font-light italic mb-8 leading-relaxed">«Думала, что домашний онлайн-фитнес не работает. Очень сильно ошибалась. Кураторы просто золото, не давали мне сдаться.»</p>
+                    <div class="font-heading font-bold text-white uppercase tracking-wider text-sm">— Анна, 31 год</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="faq" class="py-32 px-6 bg-[#0a0a0a] relative border-t border-white/5">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-premium text-sm font-heading font-bold uppercase tracking-widest block mb-4">Снимаем страхи</span>
+                <h2 class="text-3xl md:text-5xl font-heading font-black text-white uppercase tracking-wide">Частые вопросы</h2>
+            </div>
+            
+            <div class="space-y-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="bg-[#121212] border border-white/5 rounded-2xl overflow-hidden hover:border-premium/30 transition">
+                    <button onclick="toggleAccordion(this)" class="w-full px-8 py-6 flex justify-between items-center focus:outline-none">
+                        <span class="text-lg font-heading font-bold text-white tracking-wider text-left">А если я совсем новичок?</span>
+                        <svg class="w-6 h-6 text-premium transform transition-transform duration-300 arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="px-8 pb-6 hidden content text-zinc-400 font-light border-t border-white/5 pt-4 mt-2 leading-relaxed">
+                        Программа идеально подходит для любого уровня подготовки. Мы начинаем с основ и биомеханики, чтобы подготовить ваше связки и мышцы без риска травм.
+                    </div>
+                </div>
+                
+                <div class="bg-[#121212] border border-white/5 rounded-2xl overflow-hidden hover:border-premium/30 transition">
+                    <button onclick="toggleAccordion(this)" class="w-full px-8 py-6 flex justify-between items-center focus:outline-none">
+                        <span class="text-lg font-heading font-bold text-white tracking-wider text-left">Нужен ли инвентарь для дома?</span>
+                        <svg class="w-6 h-6 text-premium transform transition-transform duration-300 arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="px-8 pb-6 hidden content text-zinc-400 font-light border-t border-white/5 pt-4 mt-2 leading-relaxed">
+                        Для первых двух недель вам понадобится только коврик. Далее мы рекомендуем приобрести фитнес-резинки и пару разборных гантелей (от 2 до 5 кг).
+                    </div>
+                </div>
+                
+                <div class="bg-[#121212] border border-white/5 rounded-2xl overflow-hidden hover:border-premium/30 transition">
+                    <button onclick="toggleAccordion(this)" class="w-full px-8 py-6 flex justify-between items-center focus:outline-none">
+                        <span class="text-lg font-heading font-bold text-white tracking-wider text-left">У меня проблемы с коленями. Можно?</span>
+                        <svg class="w-6 h-6 text-premium transform transition-transform duration-300 arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="px-8 pb-6 hidden content text-zinc-400 font-light border-t border-white/5 pt-4 mt-2 leading-relaxed">
+                        Каждое упражнение имеет альтернативный вариант (облегченный или без осевой нагрузки). Однако, если у вас есть острые боли, настоятельно рекомендуем проконсультироваться с врачом до старта.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#050505] py-12 px-6 border-t border-white/5 text-center md:text-left">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-2xl font-heading font-black tracking-widest text-white uppercase">
+                AURA<span class="text-premium">.</span>
+            </div>
+            <div class="text-zinc-500 text-sm font-light">
+                &copy; 2026 AURA Fitness. Все права защищены.
+            </div>
+            <div class="flex gap-6 text-sm font-light text-zinc-500">
+                <a href="#" class="hover:text-premium transition">Договор оферты</a>
+                <a href="#" class="hover:text-premium transition">Политика конфиденциальности</a>
+            </div>
+        </div>
+    </footer>
+    <div id="paymentModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-500 px-6">
+        <div id="paymentContent" class="bg-[#121212] border border-white/10 rounded-3xl w-full max-w-md p-10 shadow-2xl transform scale-90 transition-all duration-500 relative">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-zinc-500 hover:text-white transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            
+            <div id="form-container">
+                <h3 class="text-2xl font-heading font-black text-white mb-2 uppercase">Оформление</h3>
+                <p class="text-zinc-500 text-xs mb-8">Тариф: <span id="selectedTariff" class="text-premium font-bold italic"></span></p>
+                
+                <form id="auraForm" class="space-y-4">
+                    <input type="text" id="name" placeholder="Ваше имя" class="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-white focus:border-premium transition outline-none">
+                    <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" class="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-white focus:border-premium transition outline-none">
+                    <input type="email" id="email" placeholder="E-mail" class="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-white focus:border-premium transition outline-none">
+                    <button type="button" onclick="validateAndSubmit()" class="w-full py-5 bg-premium text-black font-heading font-bold uppercase tracking-widest text-xs rounded-xl premium-glow hover:bg-white transition duration-500 mt-4">Оплатить доступ</button>
+                </form>
+            </div>
+
+            <div id="success-screen" class="hidden text-center py-10">
+                <div class="w-20 h-20 bg-premium/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span class="text-premium text-4xl">✓</span>
+                </div>
+                <h3 class="text-2xl font-heading font-black text-white mb-4 uppercase">Успешно!</h3>
+                <p class="text-zinc-400 font-light text-sm">Ваша заявка принята. Инструкции отправлены на почту.</p>
+                <button onclick="closeModal()" class="mt-8 text-premium text-xs font-bold uppercase tracking-widest hover:text-white transition">Вернуться на сайт</button>
+            </div>
+        </div>
+    </div>
+    <div id="paymentModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-500">
+        <div id="paymentContent" class="bg-[#121212] border border-white/10 rounded-3xl w-full max-w-md p-8 shadow-2xl transform scale-90 transition-all duration-500 relative mx-4">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-zinc-500 hover:text-white transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h3 class="text-2xl font-heading font-bold text-white mb-2 uppercase">Оформление</h3>
+            <p class="text-zinc-400 text-sm mb-6 font-light">Выбранный тариф: <span id="selectedTariff" class="text-premium font-bold uppercase tracking-wider"></span></p>
+            
+            <form class="space-y-4" onsubmit="event.preventDefault(); alert('Ваша заявка успешно отправлена! В ближайшее время мы свяжемся с вами.'); closeModal();">
+                <div>
+                    <input type="text" required class="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white focus:border-premium transition" placeholder="Ваше имя">
+                </div>
+                <div>
+                    <input type="tel" required class="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white focus:border-premium transition" placeholder="+7 (___) ___-__-__">
+                </div>
+                <div>
+                    <input type="email" required class="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white focus:border-premium transition" placeholder="E-mail">
+                </div>
+                <button type="submit" class="w-full py-4 mt-6 bg-premium text-black font-heading font-bold uppercase tracking-widest text-sm rounded-xl premium-glow hover:bg-white transition duration-500">
+                    Перейти к оплате
+                </button>
+                <p class="text-[10px] text-zinc-500 text-center mt-4 uppercase tracking-widest font-light">Нажимая кнопку, вы соглашаетесь с условиями оферты</p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Таймер
+        function startTimer() {
+            const countDownDate = new Date();
+            countDownDate.setDate(countDownDate.getDate() + 7);
+
+            const timerInterval = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+                document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+                document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+                if (distance < 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById("days").innerText = "00";
+                    document.getElementById("hours").innerText = "00";
+                    document.getElementById("minutes").innerText = "00";
+                    document.getElementById("seconds").innerText = "00";
+                }
+            }, 1000);
+        }
+
+        // Аккордеон
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const arrow = button.querySelector('.arrow');
+            
+            content.classList.toggle('hidden');
+            arrow.classList.toggle('rotate-180');
+        }
+
+        // Модальное окно покупки
+        function openModal(tariff) {
+            document.getElementById('selectedTariff').innerText = tariff;
+            const m = document.getElementById('paymentModal');
+            const c = document.getElementById('paymentContent');
+            m.classList.replace('opacity-0', 'opacity-100');
+            m.classList.replace('pointer-events-none', 'pointer-events-auto');
+            c.classList.replace('scale-90', 'scale-100');
+        }
+
+        function closeModal() {
+            const m = document.getElementById('paymentModal');
+            const c = document.getElementById('paymentContent');
+            m.classList.replace('opacity-100', 'opacity-0');
+            m.classList.replace('pointer-events-auto', 'pointer-events-none');
+            c.classList.replace('scale-100', 'scale-90');
+        }
+
+        // Закрытие модального окна при клике на темный фон
+        document.getElementById('paymentModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+// Логика Калькулятора ИМТ
+function calculateBMI() {
+            const h = document.getElementById('height').value / 100;
+            const w = document.getElementById('weight').value;
+            
+            if(!h || !w) {
+                alert('Пожалуйста, введите рост и вес!');
+                return;
+            }
+            
+            const bmi = (w / (h * h)).toFixed(1);
+            const resBox = document.getElementById('bmi-result-box');
+            
+            document.getElementById('bmi-value').innerText = bmi;
+            resBox.classList.remove('opacity-40');
+            resBox.classList.add('bg-premium/10', 'border-premium/30'); // Подсвечиваем блок при результате
+
+            let status = "", advice = "";
+            if(bmi < 18.5) { 
+                status = "Дефицит веса"; 
+                advice = "Рекомендуем тариф VIP с упором на профицит калорий и набор мышечной массы."; 
+            }
+            else if(bmi < 25) { 
+                status = "Норма"; 
+                advice = "Отличный показатель! Тариф «С поддержкой» поможет создать красивый рельеф."; 
+            }
+            else { 
+                status = "Избыточный вес"; 
+                advice = "Тариф «С поддержкой» поможет плавно и безопасно снизить вес под контролем куратора."; 
+            }
+            
+            document.getElementById('bmi-status').innerText = status;
+            document.getElementById('bmi-advice').innerText = advice;
+        }
+        // Логика Модального окна
+        function openModal(tariff) {
+            document.getElementById('selectedTariff').innerText = tariff;
+            const m = document.getElementById('paymentModal');
+            const c = document.getElementById('paymentContent');
+            
+            // Показываем окно
+            m.classList.replace('opacity-0', 'opacity-100');
+            m.classList.remove('pointer-events-none');
+            c.classList.replace('scale-90', 'scale-100');
+            
+            // Сбрасываем форму (если до этого была успешная отправка)
+            document.getElementById('form-container').classList.remove('hidden');
+            document.getElementById('success-screen').classList.add('hidden');
+            
+            // Очищаем поля
+            document.getElementById('name').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('email').value = '';
+        }
+
+        function closeModal() {
+            const m = document.getElementById('paymentModal');
+            const c = document.getElementById('paymentContent');
+            
+            // Прячем окно
+            m.classList.replace('opacity-100', 'opacity-0');
+            m.classList.add('pointer-events-none');
+            c.classList.replace('scale-100', 'scale-90');
+        }
+
+        function validateAndSubmit() {
+            const name = document.getElementById('name');
+            const phone = document.getElementById('phone');
+            const email = document.getElementById('email');
+            let valid = true;
+
+            // Проверяем каждое поле
+            [name, phone, email].forEach(el => {
+                el.classList.remove('error-shake');
+                void el.offsetWidth; // Хак для перезапуска анимации
+                
+                if(!el.value || el.value.length < 3) {
+                    el.classList.add('error-shake');
+                    valid = false;
+                }
+            });
+
+            if(valid) {
+                // Если всё ок — показываем экран успеха
+                document.getElementById('form-container').classList.add('hidden');
+                document.getElementById('success-screen').classList.remove('hidden');
+            }
+        }
+        // Запуск таймера при загрузке страницы
+        document.addEventListener('DOMContentLoaded', startTimer);
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+    </script>
+</body>
+</html>
